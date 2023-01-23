@@ -1,0 +1,137 @@
+# Git
+
+## Delete local and remote tag
+g-t-d() {
+    git tag -d "$1" && git push --delete origin "$1"
+}
+
+## Alternative for deleting remote tag
+g-t-dr() {
+    git push origin :refs/tags/"$1"
+}
+
+## Push commit to master (force)
+g-p-f() {
+    git push -f origin "$1":master
+}
+
+## Undo add for specific file
+g-u-a() {
+    git restore --staged "$1"
+}
+
+## Check all local git repos
+g-s-a() {
+    # Save current directory location
+    current_dir=$(pwd)
+
+    R=80
+    G=80
+    B=80
+    width=$(tput cols)
+
+    # Keep track of number of directories with something to report
+    dirs=0
+
+    # mydirs is an array of directories (see variables)
+    for ((i = 1; i <= ${#mydirs[@]}; i++)); do
+        d=${mydirs[i]}
+        cd "$d"
+        name=$(echo "$d" | sed -E "s/\/home\/[^\/]+(.*)$/\1/")
+        git_report=0
+
+        ## Checks for unpushed commits to origin/master
+        # ! git diff --quiet HEAD origin/master
+
+        ## Checks for staged changes in working tree
+        # ! git diff --cached --quiet 2>/dev/null
+
+        ## Checks for unstaged changes in working tree
+        # ! git diff --quiet 2>/dev/null
+        if ! git diff --quiet HEAD origin/master || ! git diff --cached --quiet 2>/dev/null || ! git diff --quiet 2>/dev/null; then
+
+            dirs+=1
+            git_report=1
+
+            printf "\n"
+
+            # Separator line with dashes
+            if [ "$dirs" -ge 2 ]; then
+                printf "\033[38;2;${R};${G};${B}m"
+                printf "%.0s-" $(seq 1 $width)
+                printf "\033[0m"
+                echo "\n"
+            fi
+
+            echo "\e[32;1m~$name\e[0m"
+
+            if ! git diff --cached --quiet 2>/dev/null || ! git diff --quiet 2>/dev/null; then
+                printf "\n"
+                g-s
+            fi
+
+            if ! git diff --quiet HEAD origin/master; then
+                printf "\n"
+                echo "\e[33mThere are unpushed commits to origin/master\e[0m"
+            fi
+        fi
+
+        # Compare last local and remote tags
+        if [ "$1" = "tags" ]; then
+            # Switch to ssh key 2
+            if [ "$i" = 1 ]; then
+                ssh-2-no
+            fi
+
+            # Switch to ssh key 1
+            if [ "$i" = 9 ]; then
+                ssh-1-no
+            fi
+
+            if git describe --abbrev=0 --tags >/dev/null 2>&1; then
+                local_tag_name=$(git describe --abbrev=0 --tags)
+                remote_tag_name=$(git ls-remote --refs --tags origin | grep -o 'refs/tags/[^\^{}]*' | tail -n1 | awk -F/ '{print $3}')
+
+                if [ "$local_tag_name" = "$remote_tag_name" ]; then
+                    printf "\033[38;2;100;100;100m"
+                    printf "."
+                    printf "\033[0m"
+                else
+                    dirs+=1
+
+                    if [[ $git_report -eq 0 ]]; then
+                        printf "\n"
+
+                        # Separator line with dashes
+                        if [ "$dirs" -ge 2 ]; then
+                            printf "\033[38;2;${R};${G};${B}m"
+                            printf "%.0s-" $(seq 1 $width)
+                            printf "\033[0m"
+                            echo "\n"
+                        fi
+
+                        echo "\e[32;1m~$name\e[0m"
+                    fi
+
+                    printf "\n"
+                    printf "Local tag:  \033[32m$local_tag_name\033[0m\n"
+
+                    if test -z "$remote_tag_name"; then
+                        printf "Remote tag: \033[33m     -\033[0m\n"
+                    else
+                        printf "Remote tag: \033[33m$remote_tag_name\033[0m\n"
+                    fi
+                fi
+            fi
+        fi
+    done
+
+    if [ "$dirs" -ge 1 ]; then
+        printf "\n"
+    else
+        echo "\nEverything up to date\n"
+    fi
+
+    # Go back to current directory location
+    cd $current_dir
+}
