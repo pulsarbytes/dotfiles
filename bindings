@@ -1,0 +1,23 @@
+# To find the key codes, run cat in terminal, press the keys and see the output
+
+# Chars
+
+bindkey "^[[1;3D" backward-delete-char # Alt + Left
+bindkey "^[[1;3C" delete-char-or-list # Alt + Right
+
+# Words
+
+bindkey "^[[1;5D" backward-word   # Control + Left
+bindkey "^[[1;5C" forward-word    # Control + Right
+
+bindkey "^[[1;7D" backward-kill-word # Control + Alt + Left
+bindkey "^[[1;7C" kill-word # Control + Alt + Right
+
+# Lines
+
+bindkey "^[[5~" beginning-of-line # pageup
+bindkey "^[[6~" end-of-line       # pagedown
+
+bindkey "^[[5;3~" backward-kill-line # Control + PageUp
+bindkey "^[[6;3~" kill-line          # Control + PageDown
+bindkey "^K" kill-whole-line

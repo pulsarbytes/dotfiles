@@ -1,0 +1,101 @@
+alias ls='ls --color=auto'
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+#alias dir='dir --color=auto'
+#alias vdir='vdir --color=auto'
+
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+# easier navigation
+alias ..='cd ..'
+alias ....='cd ../..'
+alias ......='cd ../../..'
+alias ........='cd ../../../..'
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+# logs
+alias cd-logs='cd /var/log'
+
+# apache
+alias status-apache='systemctl status apache2.service'
+alias start-apache='systemctl start apache2.service'
+alias restart-apache='systemctl restart apache2.service'
+alias stop-apache='systemctl stop apache2.service'
+
+# PHP
+alias php8-0='sudo a2dismod php8.2 &&
+sudo a2dismod php8.1 &&
+sudo a2enmod php8.0 &&
+sudo update-alternatives --set php /usr/bin/php8.0 &&
+sudo systemctl restart apache2'
+alias php8-1='sudo a2dismod php8.2 &&
+sudo a2dismod php8.0 &&
+sudo a2enmod php8.1 &&
+sudo update-alternatives --set php /usr/bin/php8.1 &&
+sudo systemctl restart apache2'
+alias php8-2='sudo a2dismod php8.1 &&
+sudo a2dismod php8.0 &&
+sudo a2enmod php8.2 &&
+sudo update-alternatives --set php /usr/bin/php8.2 &&
+sudo systemctl restart apache2'
+
+# System info
+
+## Battery
+alias watch-battery='watch -n1 upower -i /org/freedesktop/UPower/devices/battery_BAT0'
+
+## Sensors
+alias watch-sensors='watch -n1 sensors'
+
+## Graphics cards
+alias active-gpu='sudo lshw -numeric -c video'
+
+## GPU
+alias watch-nvidia='watch -n1 nvidia-smi'
+
+## CPU
+alias watch-cpu='watch -n1 lscpu'
+
+## CPU Cores
+alias watch-cores='watch -n1 "cat /proc/cpuinfo | grep \"^[c]pu MHz\""'
+
+## Fan
+alias watch-fan='watch -n1 -d "sensors | grep fan"'
+
+# IP address
+alias my-ip='curl https://ipinfo.io/ip && echo ""'
+
+# Network
+alias wifi-password='sudo grep psk= /etc/NetworkManager/system-connections/*'
+
+# Defragment path (eg. sudo defrag /home)
+alias defrag='sudo e4defrag -c'
+
+# Git
+alias g-s='git status -s'
+alias g-a='git add'
+alias g-c='git commit'
+alias g-l-all='git log --oneline'
+alias g-l='git log -n 20 --oneline'
+alias g-t='git tag'
+alias g-t-r='git ls-remote --refs --tags origin'
+alias g-b='git branch'
+alias g-ch='git checkout'
+alias g-m='git merge'
+alias g-u-c='git reset --soft HEAD~1'
+
+# Tmux
+alias tx=tmux
+
+# khal calendar
+alias cal='khal'
+alias call='khal list'
+alias calk='khal calendar'
+alias cali='khal interactive'
