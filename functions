@@ -135,3 +135,8 @@ g-s-a() {
     # Go back to current directory location
     cd $current_dir
 }
+
+# pwngbd debugger
+pwn() {
+    gdb -q -ex 'source ~/Projects/vendor/pwndbg/gdbinit.py' -ex "file $1" -ex 'start'
+}
