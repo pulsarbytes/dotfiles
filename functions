@@ -40,17 +40,9 @@ g-s-a() {
         name=$(echo "$d" | sed -E "s/\/home\/[^\/]+(.*)$/\1/")
         git_report=0
 
-        ## Checks for unpushed commits to origin/master
-        # ! git diff --quiet HEAD origin/master
+        if ! git diff --quiet HEAD origin/master || ! git diff-index --quiet HEAD; then
 
-        ## Checks for staged changes in working tree
-        # ! git diff --cached --quiet 2>/dev/null
-
-        ## Checks for unstaged changes in working tree
-        # ! git diff --quiet 2>/dev/null
-        if ! git diff --quiet HEAD origin/master || ! git diff --cached --quiet 2>/dev/null || ! git diff --quiet 2>/dev/null; then
-
-            dirs+=1
+            let dirs=dirs+1
             git_report=1
 
             printf "\n"
@@ -65,7 +57,7 @@ g-s-a() {
 
             echo "\e[32;1m~$name\e[0m"
 
-            if ! git diff --cached --quiet 2>/dev/null || ! git diff --quiet 2>/dev/null; then
+            if ! git diff-index --quiet HEAD; then
                 printf "\n"
                 g-s
             fi
