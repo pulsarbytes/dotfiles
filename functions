@@ -76,7 +76,7 @@ g-s-a() {
             fi
 
             # Switch to ssh key 1
-            if [ "$i" = 10 ]; then
+            if [ "$i" = 9 ]; then
                 ssh-1-no
             fi
 
