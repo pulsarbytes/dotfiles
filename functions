@@ -39,8 +39,9 @@ g-s-a() {
         cd "$d"
         name=$(echo "$d" | sed -E "s/\/home\/[^\/]+(.*)$/\1/")
         git_report=0
+        ssh1=0
 
-        if ! git diff --quiet HEAD origin/master || ! git diff-index --quiet HEAD; then
+        if ! git diff --quiet HEAD origin/master 2>/dev/null || ! git diff-index --quiet HEAD; then
 
             let dirs=dirs+1
             git_report=1
@@ -62,7 +63,7 @@ g-s-a() {
                 g-s
             fi
 
-            if ! git diff --quiet HEAD origin/master; then
+            if ! git diff --quiet HEAD origin/master 2>/dev/null; then
                 printf "\n"
                 echo "\e[33mThere are unpushed commits to origin/master\e[0m"
             fi
@@ -70,13 +71,14 @@ g-s-a() {
 
         # Compare last local and remote tags
         if [ "$1" = "tags" ]; then
-            # Switch to ssh key 2
+            # Start with ssh-2 key
             if [ "$i" = 1 ]; then
                 ssh-2-no
             fi
 
-            # Switch to ssh key 1
-            if [ "$i" = 9 ]; then
+            # Switch to ssh-1 key if this is the first Minitek item
+            if [ $ssh1 -ne 1 ] && echo "$name" | grep -q Minitek; then
+                ssh=1
                 ssh-1-no
             fi
 
