@@ -63,9 +63,13 @@ g-s-a() {
                 g-s
             fi
 
-            if ! git diff --quiet HEAD origin/master 2>/dev/null; then
-                printf "\n"
-                echo "\e[33mThere are unpushed commits to origin/master\e[0m"
+            # Check if there are commits
+            if git rev-parse --verify HEAD &>/dev/null; then
+                # Check for differences between the local branch and the origin/master branch
+                if ! git diff --quiet HEAD origin/master 2>/dev/null; then
+                    printf "\n"
+                    echo "\e[33mThere are unpushed commits to origin/master\e[0m"
+                fi
             fi
         fi
 
