@@ -41,7 +41,7 @@ g-s-a() {
         git_report=0
         ssh1=0
 
-        if ! git diff --quiet HEAD origin/master 2>/dev/null || ! git diff-index --quiet HEAD; then
+        if ! git diff --quiet HEAD origin/master 2>/dev/null || ! git diff-index --quiet HEAD 2>/dev/null; then
 
             let dirs=dirs+1
             git_report=1
@@ -58,7 +58,7 @@ g-s-a() {
 
             echo "\e[32;1m~$name\e[0m"
 
-            if ! git diff-index --quiet HEAD; then
+            if ! git diff-index --quiet HEAD 2>/dev/null; then
                 printf "\n"
                 g-s
             fi
