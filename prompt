@@ -283,3 +283,13 @@ prompt_adam2_choose_prompt () {
 }
 
 prompt_adam2_setup "$@"
+
+function virtualenv_info {
+  if [[ -n "$VIRTUAL_ENV" ]]; then
+    echo "%{$fg_bold[green]%}($(basename "$VIRTUAL_ENV"))%{$reset_color%}"
+  fi
+}
+
+function RPR_EXTRA() {
+  echo "$(virtualenv_info)"
+}
