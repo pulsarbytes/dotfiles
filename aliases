@@ -56,6 +56,7 @@ alias watch-sensors='watch -n1 sensors'
 
 ## Graphics cards
 alias active-gpu='sudo lshw -numeric -c video'
+alias active-gpu-now='glxinfo | grep "OpenGL renderer"'
 
 ## GPU
 alias watch-nvidia='watch -n1 nvidia-smi'
