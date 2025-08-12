@@ -131,3 +131,7 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)
