@@ -95,8 +95,9 @@ alias g-u-c='git reset --soft HEAD~1'
 # Tmux
 alias tx=tmux
 
-# khal calendar
-alias cal='khal'
-alias call='khal list'
-alias calk='khal calendar'
-alias cali='khal interactive'
+# MongoDB
+
+alias start-mongodb='sudo systemctl start mongod'
+alias status-mongodb='sudo systemctl status mongod'
+alias stop-mongodb='sudo systemctl stop mongod'
+alias restart-mongodb='sudo systemctl restart mongod'
