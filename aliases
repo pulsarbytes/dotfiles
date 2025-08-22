@@ -23,12 +23,6 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # logs
 alias cd-logs='cd /var/log'
 
-# apache
-alias status-apache='systemctl status apache2.service'
-alias start-apache='systemctl start apache2.service'
-alias restart-apache='systemctl restart apache2.service'
-alias stop-apache='systemctl stop apache2.service'
-
 # PHP
 alias php8-0='sudo a2dismod php8.2 &&
 sudo a2dismod php8.1 &&
@@ -95,9 +89,30 @@ alias g-u-c='git reset --soft HEAD~1'
 # Tmux
 alias tx=tmux
 
-# MongoDB
+# Apache
+alias enabled-apache='systemctl is-enabled apache2.service'
+alias status-apache='systemctl status apache2.service'
+alias start-apache='systemctl start apache2.service'
+alias restart-apache='systemctl restart apache2.service'
+alias stop-apache='systemctl stop apache2.service'
 
-alias start-mongodb='sudo systemctl start mongod'
+# MongoDB
+alias enabled-mongodb='systemctl is-enabled mongod'
 alias status-mongodb='sudo systemctl status mongod'
-alias stop-mongodb='sudo systemctl stop mongod'
+alias start-mongodb='sudo systemctl start mongod'
 alias restart-mongodb='sudo systemctl restart mongod'
+alias stop-mongodb='sudo systemctl stop mongod'
+
+# Docker (will autostart via socket if requested)
+alias enabled-docker="systemctl is-enabled docker"
+alias status-docker="systemctl status docker --no-pager"
+alias start-docker="sudo systemctl start docker"
+alias restart-docker="sudo systemctl restart docker"
+alias stop-docker="sudo systemctl stop docker"
+
+# MySQL
+alias enabled-mysql="systemctl is-enabled mysql"
+alias status-mysql="systemctl status mysql --no-pager"
+alias start-mysql="sudo systemctl start mysql"
+alias restart-mysql="sudo systemctl restart mysql"
+alias stop-mysql="sudo systemctl stop mysql"
