@@ -24,21 +24,7 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 alias cd-logs='cd /var/log'
 
 # PHP
-alias php8-0='sudo a2dismod php8.2 &&
-sudo a2dismod php8.1 &&
-sudo a2enmod php8.0 &&
-sudo update-alternatives --set php /usr/bin/php8.0 &&
-sudo systemctl restart apache2'
-alias php8-1='sudo a2dismod php8.2 &&
-sudo a2dismod php8.0 &&
-sudo a2enmod php8.1 &&
-sudo update-alternatives --set php /usr/bin/php8.1 &&
-sudo systemctl restart apache2'
-alias php8-2='sudo a2dismod php8.1 &&
-sudo a2dismod php8.0 &&
-sudo a2enmod php8.2 &&
-sudo update-alternatives --set php /usr/bin/php8.2 &&
-sudo systemctl restart apache2'
+alias change-php='sudo update-alternatives --config php'
 
 # System info
 
